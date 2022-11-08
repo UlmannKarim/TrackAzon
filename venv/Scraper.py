@@ -68,10 +68,9 @@ class TrackAzon:
 
 
     def priceCheck(self):
-        # f = open('logs.txt', 'r')
-        # title = getTitle()
-        # price = getPrice()
-        # print(price)
+        f = open('venv/logs/logs.txt', 'r')
+        title = self.getTitle()
+        price = self.getPrice()
 
         readPrice = 0.0
         for line in f:
@@ -82,13 +81,11 @@ class TrackAzon:
             except:
                 continue
         f.close()
-        print(readPrice, 'Read Price')
-        print(price, 'Converted Price')
 
         if price != readPrice:  # if the cost is lower than our old cost
-            nf = open('logs.txt', 'a')
-            nf.write('Title: ' + title.strip() + '\n  Current Price: ' + str(
-                price).strip() + '\n logged at ' + getTime() + '\n \n')
+            log = self.fillLogs('venv/Templates/logTemplate')
+            nf = open('venv/logs/logs.txt', 'a')
+            nf.write(log)
             nf.close()
             self.postiveOutcome()
         elif price == readPrice:
@@ -110,6 +107,15 @@ class TrackAzon:
 
             return subject,body
 
+    def fillLogs(self, template):
+        with open(template) as temp:
+            contents = temp.read()
+            modifiedContents = contents.replace("%TITLE%", self.getTitle())
+            modifiedContents = modifiedContents.replace("%PRICE%", self.getPrice())
+            modifiedContents = modifiedContents.replace("%DATE%", self.getDate())
+            modifiedContents = modifiedContents.replace("%TIME%", self.getTime())
+
+            return modifiedContents
 
     def postiveOutcome(self):
 
@@ -139,3 +145,4 @@ class TrackAzon:
         with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
             smtp.login(self._SENDER_EMAIL, self._SENDER_PASSWORD)
             smtp.sendmail(self._SENDER_EMAIL, self._emailReceiver, self._em.as_string())
+
