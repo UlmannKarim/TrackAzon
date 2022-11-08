@@ -1,0 +1,8 @@
+PRICE DROP %TITLE%! %PRICE% EUR at %DATE%
+-----
+CURRENT PRICE IS NOW %PRICE% EUR
+as of %TIME% %DATE%
+
+Check the the product linked below on the Amazon website for details!
+
+%URL%

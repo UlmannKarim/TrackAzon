@@ -1,16 +1,9 @@
-# This is a sample Python script.
+from Scraper import *
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+test = TrackAzon(
+    "https://www.amazon.de/MQ9X3ZD-A/dp/B0BDJGV887/ref=sr_1_1_sspa?keywords=iphone+14+pro+max&qid=1667866901&sprefix"
+    "=ip%2Caps%2C63&sr=8-1-spons&psc=1",
+    "119329701@umail.ucc.ie"
+    )
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+print(test.postiveOutcome())
