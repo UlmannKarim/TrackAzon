@@ -95,21 +95,6 @@ class TrackAzon:
             # no change
             self.negativeOutcome()
 
-
-    # def senderLogin(self):
-    #     # server = smtplib.SMTP('smtp.gmail.com', 587)
-    #     # server.ehlo()
-    #     # server.starttls()
-    #     # server.ehlo()
-    #     # return server
-    #     context = ssl.create_default_context()
-    #     with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-    #         smtp.login(self._SENDER_EMAIL, self._SENDER_PASSWORD)
-    #         return smtp
-
-
-        #server.login(self._SENDER_EMAIL, self._SENDER_PASSWORD)
-
     def composeEmail(self, template):
         with open(template) as temp:
             contents = temp.read()
@@ -125,52 +110,32 @@ class TrackAzon:
 
             return subject,body
 
-    # def sendMail(self, subject, body,recepient, smtp):
-        # server = self.senderLogin()
-        # msg = f"Subject: {subject}\n\n{body}"
-        # server.sendmail(
-        #     self._SENDER_EMAIL,
-        #     recepient,
-        #     msg
-        # )
-        # server.quit()
-
-        #smtp = self.senderLogin()
-        # self._em['From'] = self._SENDER_EMAIL
-        # self._em['To'] = self._emailReceiver
-        # self._em['Subject'] = subject
-        # self._em.set_content(body)
-        # smtp.sendmail(self._SENDER_EMAIL, self._emailReceiver, self._em.as_string())
-        # smtp.quit()
-
-
 
     def postiveOutcome(self):
 
-        # smtp = self.senderLogin()
+        mail = self.composeEmail("venv/Templates/positiveMail")
+
+        self._em['From'] = self._SENDER_EMAIL
+        self._em['To'] = self._emailReceiver
+        self._em['Subject'] = mail[0]
+        self._em.set_content(mail[1])
+
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
             smtp.login(self._SENDER_EMAIL, self._SENDER_PASSWORD)
-            mail = self.composeEmail("venv/Templates/positiveMail")
-
-            self._em['From'] = self._SENDER_EMAIL
-            self._em['To'] = self._emailReceiver
-            self._em['Subject'] = mail[0]
-            self._em.set_content(mail[1])
             smtp.sendmail(self._SENDER_EMAIL, self._emailReceiver, self._em.as_string())
-            smtp.quit()
-
-        #     context = ssl.create_default_context()
-        #     with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
-        #         smtp.login(self._SENDER_EMAIL, self._SENDER_PASSWORD)
 
 
     def negativeOutcome(self):
 
-        self.senderLogin()
-        self.composeEmail("venv/Templates/negativeMail")
-        self.sendMail(subject, body, self.getEmailReceiver())
+        mail = self.composeEmail("venv/Templates/negativeMail")
 
-    # while True:
-    #     priceCheck()
-    #     time.sleep(86400)
+        self._em['From'] = self._SENDER_EMAIL
+        self._em['To'] = self._emailReceiver
+        self._em['Subject'] = mail[0]
+        self._em.set_content(mail[1])
+
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+            smtp.login(self._SENDER_EMAIL, self._SENDER_PASSWORD)
+            smtp.sendmail(self._SENDER_EMAIL, self._emailReceiver, self._em.as_string())

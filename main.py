@@ -6,4 +6,4 @@ test = TrackAzon(
     "119329701@umail.ucc.ie"
     )
 
-print(test.postiveOutcome())
+print(test.negativeOutcome())
