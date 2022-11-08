@@ -51,9 +51,8 @@ class TrackAzon:
     def getPrice(self):
         page = requests.get(self.getURL(), headers=self.getHeaders())
         soup = BeautifulSoup(page.content, 'html.parser')
-        targetDiv = soup.find(id='attach-base-product-price')['value']
-
-        return targetDiv
+        price = soup.find(id='attach-base-product-price')['value']
+        return price
 
 
     def getTime(self):
